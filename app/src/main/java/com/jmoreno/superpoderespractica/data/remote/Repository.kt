@@ -1,8 +1,10 @@
 package com.jmoreno.superpoderespractica.data.remote
 
+import com.jmoreno.superpoderespractica.model.Empty
 import com.jmoreno.superpoderespractica.model.Hero
+import com.jmoreno.superpoderespractica.model.Welcome
 
 interface Repository {
-    suspend fun login(user: String, password: String): String
-    suspend fun getHeros(): List<Hero>
+    suspend fun getWelcome(): Welcome
+    suspend fun getSeries(id: Long): Empty
 }

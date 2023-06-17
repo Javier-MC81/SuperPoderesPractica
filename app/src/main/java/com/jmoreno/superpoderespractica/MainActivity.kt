@@ -18,7 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.jmoreno.superpoderespractica.ui.navigation.NavigationGraph
+import com.jmoreno.superpoderespractica.navigation.NavigationGraph
+import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListScreen
 import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListViewModel
 import com.jmoreno.superpoderespractica.ui.theme.SuperPoderesPracticaTheme
 import com.jmoreno.superpoderespractica.ui.ui.login.LoginViewModel
@@ -27,14 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val loginViewModel: LoginViewModel by viewModels()
     private val superHeroListViewModel: SuperHeroListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SuperPoderesPracticaTheme {
-                NavigationGraph(loginViewModel, superHeroListViewModel)
+                NavigationGraph(superHeroListViewModel)
+                //SuperHeroListScreen(viewModel = superHeroListViewModel)
             }
         }
     }

@@ -44,21 +44,21 @@ import com.jmoreno.superpoderespractica.R
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, onLoginFinished: () -> (Unit)) {
 
-    val state by viewModel.state.observeAsState()
+    //val state by viewModel.state.observeAsState()
 
-    LaunchedEffect(state){
+    /*LaunchedEffect(state){
         if (state == true){
             onLoginFinished()
         }
-    }
+    }*/
 
-    LoginScreenContent(state = state == true, onLoginClicked = { user, password ->
-        viewModel.doLogin(user, password)
+    LoginScreenContent(onLoginClicked = {
+        viewModel.doLogin()
     })
 }
 
 @Composable
-fun LoginScreenContent(state: Boolean, onLoginClicked: (String, String) -> (Unit)) {
+fun LoginScreenContent(onLoginClicked: () -> (Unit)) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -66,10 +66,6 @@ fun LoginScreenContent(state: Boolean, onLoginClicked: (String, String) -> (Unit
     ) {
         AppLogo()
 
-
-        if (state) {
-            Text(text = "Success")
-        }
 
         var email by remember {
             mutableStateOf("juanje.cilla1@gmail.com")
@@ -92,7 +88,7 @@ fun LoginScreenContent(state: Boolean, onLoginClicked: (String, String) -> (Unit
         }
         LoginButton(enabled = true) {
             Log.d("HOLA", "$email $password")
-            onLoginClicked(email, password)
+            onLoginClicked()
         }
     }
 }
@@ -170,6 +166,6 @@ fun LoginButton(enabled: Boolean, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun LoginScree_Preview() {
-    LoginScreenContent(false) { _, _ -> }
+    LoginScreenContent() {-> }
 }
 

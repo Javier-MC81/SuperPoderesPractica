@@ -11,14 +11,15 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://dragonball.keepcoding.education/"
-
+    //private const val BASE_URL = "https://dragonball.keepcoding.education/"
+    private const val BASE_URL = "http://gateway.marvel.com/"
     @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
@@ -42,7 +43,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 
@@ -51,5 +52,6 @@ object NetworkModule {
     @Singleton
     fun provideDragonBallApi(retrofit: Retrofit): DragonBallApi {
         return retrofit.create(DragonBallApi::class.java)
+
     }
 }
