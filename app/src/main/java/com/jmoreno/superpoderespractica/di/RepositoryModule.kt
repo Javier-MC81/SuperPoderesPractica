@@ -1,6 +1,8 @@
 package com.jmoreno.superpoderespractica.di
 
 
+import com.jmoreno.superpoderespractica.data.local.DefaultLocalDataSource
+import com.jmoreno.superpoderespractica.data.local.LocalDataSource
 import com.jmoreno.superpoderespractica.data.remote.Repository
 import com.jmoreno.superpoderespractica.data.remote.DefaultRemoteDataSource
 import com.jmoreno.superpoderespractica.data.remote.DefaultRepository
@@ -19,4 +21,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindRemoteDataSource(defaultRemoteDataSource: DefaultRemoteDataSource): RemoteDataSource
+
+    @Binds
+    abstract fun bindsLocalDataSource(defaultLocalDataSource: DefaultLocalDataSource): LocalDataSource
 }

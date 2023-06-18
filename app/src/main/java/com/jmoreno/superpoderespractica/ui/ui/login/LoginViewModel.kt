@@ -1,4 +1,4 @@
-package com.jmoreno.superpoderespractica.ui.ui.login
+/*package com.jmoreno.superpoderespractica.ui.ui.login
 
 
 import androidx.lifecycle.ViewModel
@@ -37,3 +37,4 @@ class LoginViewModel @Inject constructor(private val repository: Repository): Vi
         }
     }
 }
+*/

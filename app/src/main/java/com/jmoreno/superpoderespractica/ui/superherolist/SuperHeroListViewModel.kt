@@ -2,6 +2,7 @@ package com.jmoreno.superpoderespractica.ui.superherolist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jmoreno.superpoderespractica.data.local.model.LocalHero
 import com.jmoreno.superpoderespractica.data.remote.Repository
 import com.jmoreno.superpoderespractica.model.Comics
 import com.jmoreno.superpoderespractica.model.Heroe
@@ -19,8 +20,8 @@ import javax.inject.Inject
 class SuperHeroListViewModel @Inject constructor(private val repository: Repository): ViewModel() {
 
 
-    private val _state = MutableStateFlow<List<Heroe>>(emptyList())
-    val state: StateFlow<List<Heroe>> get() = _state
+    private val _state = MutableStateFlow<List<LocalHero>>(emptyList())
+    val state: StateFlow<List<LocalHero>> get() = _state
 
     private val _series = MutableStateFlow<List<ResultSeries>>(emptyList())
     val series: StateFlow<List<ResultSeries>> get() = _series
@@ -34,8 +35,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             val result = withContext(Dispatchers.IO){
                 repository.getWelcome()
             }
-            val heroes = result.data.results
-            _state.update { heroes }
+            _state.update { result }
         }
     }
     fun getSeries(id: Long){

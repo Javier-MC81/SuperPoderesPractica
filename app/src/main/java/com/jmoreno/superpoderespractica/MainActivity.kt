@@ -22,7 +22,6 @@ import com.jmoreno.superpoderespractica.navigation.NavigationGraph
 import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListScreen
 import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListViewModel
 import com.jmoreno.superpoderespractica.ui.theme.SuperPoderesPracticaTheme
-import com.jmoreno.superpoderespractica.ui.ui.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

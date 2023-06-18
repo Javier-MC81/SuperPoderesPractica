@@ -126,10 +126,8 @@ fun DetailScreenContent(series: List<ResultSeries>, comics: List<Comics>, onSupe
 @Composable
 fun DetailScreenScreen_Preview() {
     DetailScreenContent(listOf(ResultSeries(10,"Captain Carter","",2022,2022,"", Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available","jpg")),
-        ResultSeries(9,"Captain Carter","",2022,2022,"",Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available","jpg")
-        )
-    )
-    )
+        ResultSeries(9,"Captain Carter","",2022,2022,"",Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available","jpg")))
+    , listOf(),{_->})
 }
 @Composable
 fun SerieItem(serie: ResultSeries, modifier: Modifier = Modifier) {

@@ -1,4 +1,4 @@
-package com.jmoreno.superpoderespractica.ui.ui.login
+/*package com.jmoreno.superpoderespractica.ui.ui.login
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
@@ -169,3 +169,4 @@ fun LoginScree_Preview() {
     LoginScreenContent() {-> }
 }
 
+*/

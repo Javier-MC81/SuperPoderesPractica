@@ -25,7 +25,7 @@ data class Heroe(
     val id: Long,
     val name: String,
     val modified: String,
-    val thumbnail: Thumbnail?
+    val thumbnail: Thumbnail
 )
 
 data class Thumbnail(

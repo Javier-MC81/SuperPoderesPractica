@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.jmoreno.superpoderespractica.data.local.model.LocalHero
 import com.jmoreno.superpoderespractica.model.Heroe
 
 
@@ -45,7 +46,7 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel,onSuperHeroListClicked
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroListScreenContent(heros: List<Heroe>, onSuperHeroListClicked: (Long) -> Unit) {
+fun SuperHeroListScreenContent(heros: List<LocalHero>, onSuperHeroListClicked: (Long) -> Unit) {
     /*Scaffold(modifier = Modifier.fillMaxSize()) {
         LazyColumn(Modifier.padding(it)){
             items(heros, key = {it.id}){
@@ -70,14 +71,15 @@ fun SuperHeroListScreen_Preview() {
     SuperHeroListScreenContent(emptyList()) {  }
 }
 @Composable
-fun SuperheroItem(hero: Heroe, modifier: Modifier = Modifier, onHeroClick: (Long) -> Unit) {
+fun SuperheroItem(hero: LocalHero, modifier: Modifier = Modifier, onHeroClick: (Long) -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp).clickable { onHeroClick(hero.id) }
     ) {
         AsyncImage(
-            model = "${hero.thumbnail?.path}.${hero.thumbnail?.thumbnailExtension}",
+            model = hero.thumbnail,
+            //model = "${hero.thumbnail.path}.${hero.thumbnail.thumbnailExtension}",
             contentDescription = "${hero.name} photo",
             modifier = Modifier
                 .fillMaxWidth()
