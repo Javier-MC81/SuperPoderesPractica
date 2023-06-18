@@ -1,10 +1,8 @@
 package com.jmoreno.superpoderespractica.data.remote
 
-import com.jmoreno.superpoderespractica.data.remote.request.GetHerosRequest
 import com.jmoreno.superpoderespractica.model.Empty
-import com.jmoreno.superpoderespractica.model.Hero
+import com.jmoreno.superpoderespractica.model.ResultComics
 import com.jmoreno.superpoderespractica.model.Welcome
-import okhttp3.Credentials
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,6 +15,9 @@ class DefaultRemoteDataSource @Inject constructor(private val api: DragonBallApi
     }
     override suspend fun getSeries(id: Long): Empty {
         return api.getSeries(id)
+    }
+    override suspend fun getComics(id: Long): ResultComics {
+        return api.getComics(id)
     }
 
 }

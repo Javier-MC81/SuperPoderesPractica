@@ -1,6 +1,5 @@
 package com.jmoreno.superpoderespractica.ui.superherolist
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,15 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.jmoreno.superpoderespractica.model.DataClass
-import com.jmoreno.superpoderespractica.model.Hero
 import com.jmoreno.superpoderespractica.model.Heroe
-import com.jmoreno.superpoderespractica.ui.ui.login.LoginViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-
 
 
 @Composable
