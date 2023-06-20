@@ -2,12 +2,19 @@ package com.jmoreno.superpoderespractica.ui.superherolist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,13 +56,7 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel,onSuperHeroListClicked
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuperHeroListScreenContent(heros: List<LocalHero>, onSuperHeroListClicked: (Long) -> Unit) {
-    /*Scaffold(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(Modifier.padding(it)){
-            items(heros, key = {it.id}){
-                Text(text = it.name)
-            }
-        }
-    }*/
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -85,8 +88,19 @@ fun SuperheroItem(hero: LocalHero, modifier: Modifier = Modifier, onHeroClick: (
                 .fillMaxWidth()
                 .weight(1f),
             contentScale = ContentScale.Crop
+
         )
-        Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
+        Row(horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)){
+            Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp).weight(3f))
+            if(hero.favorite){
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite", tint = Color.Red, modifier = Modifier.weight(1f))
+            }else {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = Color.Green,modifier = Modifier.weight(1f))
+            }
+        }
+
     }
 }
 

@@ -9,5 +9,6 @@ import com.jmoreno.superpoderespractica.model.Thumbnail
 data class LocalHero(
     @PrimaryKey @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "thumbnail") val thumbnail: String
+    @ColumnInfo(name = "thumbnail") val thumbnail: String,
+    @ColumnInfo(name = "favorite") var favorite: Boolean
 )

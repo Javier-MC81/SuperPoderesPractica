@@ -6,6 +6,8 @@ import com.jmoreno.superpoderespractica.data.local.model.LocalHero
 import com.jmoreno.superpoderespractica.model.Empty
 import com.jmoreno.superpoderespractica.model.ResultComics
 import com.jmoreno.superpoderespractica.model.Welcome
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,5 +34,17 @@ class DefaultRepository @Inject constructor
     }
     override suspend fun getComics(id: Long): ResultComics {
         return remoteDataSource.getComics(id)
+    }
+    override suspend fun updateHero(heroe: LocalHero){
+        localDataSource.insertHero(heroe)
+    }
+    override suspend fun getHero(id: Long): LocalHero{
+        return localDataSource.getHero(id)
+    }
+    override suspend fun getHeroFlow(id: Long): Flow<LocalHero>{
+        return localDataSource.getHeroFlow(id)
+    }
+    override suspend fun getHeroesFlow(): Flow<List<LocalHero>>{
+        return localDataSource.getHerosFlow()
     }
 }

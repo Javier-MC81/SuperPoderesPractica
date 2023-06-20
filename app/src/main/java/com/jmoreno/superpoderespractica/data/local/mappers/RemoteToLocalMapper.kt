@@ -6,12 +6,10 @@ import com.jmoreno.superpoderespractica.model.Thumbnail
 import javax.inject.Inject
 
 class RemoteToLocalMapper @Inject constructor(){
-
     fun mapGetHeroResponse(getHerosResponses: List<Heroe>): List<LocalHero> {
         return getHerosResponses.map { mapGetHeroResponse(it) }
     }
-
     fun mapGetHeroResponse(getHerosResponse: Heroe): LocalHero {
-        return LocalHero(getHerosResponse.id, getHerosResponse.name, "${getHerosResponse.thumbnail.path}.${getHerosResponse.thumbnail.thumbnailExtension}")
+        return LocalHero(getHerosResponse.id, getHerosResponse.name, "${getHerosResponse.thumbnail.path}.${getHerosResponse.thumbnail.thumbnailExtension}",false)
     }
 }
