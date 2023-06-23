@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -63,9 +64,9 @@ import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListViewModel
 @Composable
 fun DetailScreen(id: Long, viewModel: SuperHeroListViewModel) {
 
-    val stateSeries by viewModel.series.collectAsState()
+    val stateSeries by viewModel.series.observeAsState()
     val stateComics by viewModel.comics.collectAsState()
-    val stateHero by viewModel.hero.collectAsState()
+    val stateHero by viewModel.hero.observeAsState()
 
     LaunchedEffect(Unit){
         viewModel.findHero(id)
@@ -74,9 +75,13 @@ fun DetailScreen(id: Long, viewModel: SuperHeroListViewModel) {
 
 
     }
-    DetailScreenContent(stateSeries,stateComics,stateHero) {
-        viewModel.updateHero(it)
+    stateHero?.let {
+        stateSeries?.let { it1 ->
+            DetailScreenContent(it1,stateComics, it) {
+            viewModel.updateHero(it)
 
+        }
+        }
     }
 }
 

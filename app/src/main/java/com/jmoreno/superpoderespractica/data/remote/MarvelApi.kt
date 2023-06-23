@@ -6,7 +6,7 @@ import com.jmoreno.superpoderespractica.model.Welcome
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface DragonBallApi {
+interface MarvelApi {
 
     @GET("v1/public/characters?ts=1&apikey=4a0923acfe91399aeb6f46ed9191c341&hash=436e126ec9c88a3886912706aa9e885d&orderBy=-modified")
     suspend fun getWelcome(): Welcome

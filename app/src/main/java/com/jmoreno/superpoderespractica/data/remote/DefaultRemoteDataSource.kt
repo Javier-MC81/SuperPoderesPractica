@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DefaultRemoteDataSource @Inject constructor(private val api: DragonBallApi) : RemoteDataSource {
+class DefaultRemoteDataSource @Inject constructor(private val api: MarvelApi) : RemoteDataSource {
 
 
     override suspend fun getWelcome(): Welcome {

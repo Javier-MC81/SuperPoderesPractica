@@ -1,5 +1,7 @@
 package com.jmoreno.superpoderespractica.ui.superherolist
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmoreno.superpoderespractica.data.local.model.LocalHero
@@ -26,14 +28,19 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
     private val _state = MutableStateFlow<List<LocalHero>>(emptyList())
     val state: StateFlow<List<LocalHero>> get() = _state
 
-    private val _series = MutableStateFlow<List<ResultSeries>>(emptyList())
-    val series: StateFlow<List<ResultSeries>> get() = _series
+    /*private val _series = MutableStateFlow<List<ResultSeries>>(emptyList())
+    val series: StateFlow<List<ResultSeries>> get() = _series*/
+    private val _series = MutableLiveData<List<ResultSeries>>()
+    val series: LiveData<List<ResultSeries>> get() = _series
 
     private val _comics = MutableStateFlow<List<Comics>>(emptyList())
     val comics: StateFlow<List<Comics>> get() = _comics
 
-    private val _hero = MutableStateFlow(LocalHero(1010,"","",false))
-    val hero: StateFlow<LocalHero> get() = _hero
+    /*private val _hero = MutableStateFlow(LocalHero(1010,"","",false))
+    val hero: StateFlow<LocalHero> get() = _hero*/
+    private val _hero = MutableLiveData(LocalHero(1010,"","",false))
+    val hero: LiveData<LocalHero> get() = _hero
+
 
 
     fun doLogin(){
@@ -56,7 +63,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
                 repository.getSeries(id)
             }
             val series = result.data.results
-            _series.update { series }
+            _series.value = series
         }
     }
     fun getComics(id: Long) {
@@ -74,12 +81,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             val hero = withContext(Dispatchers.IO){
                 repository.getHero(id)
             }
-            _hero.update { hero }
-            /*launch(Dispatchers.IO) {
-                repository.getHeroFlow(id).collect{ hero ->
-                    _hero.update {  hero }
-                }
-            }*/
+            _hero.value = hero
         }
     }
     fun updateHero(hero: LocalHero){
