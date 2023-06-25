@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
     id "kotlin-kapt"
+    //id 'com.google.secrets_gradle_plugin' version '0.4'
 
 }
 
@@ -11,6 +12,14 @@ android {
     compileSdk 33
 
     defaultConfig {
+
+        /*Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
+
+        resValue "string", "sdk_dir", properties.getProperty("sdk.dir", "")*/
+
         applicationId "com.jmoreno.superpoderespractica"
         minSdk 24
         targetSdk 33
@@ -21,6 +30,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+
     }
 
     buildTypes {

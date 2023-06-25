@@ -59,6 +59,7 @@ import com.jmoreno.superpoderespractica.model.Heroe
 import com.jmoreno.superpoderespractica.model.ResultSeries
 import com.jmoreno.superpoderespractica.model.Thumbnail
 import com.jmoreno.superpoderespractica.ui.superherolist.SuperHeroListViewModel
+import com.jmoreno.superpoderespractica.ui.superherolist.SuperheroItem
 
 
 @Composable
@@ -68,30 +69,28 @@ fun DetailScreen(id: Long, viewModel: SuperHeroListViewModel) {
     val stateComics by viewModel.comics.collectAsState()
     val stateHero by viewModel.hero.observeAsState()
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.findHero(id)
         viewModel.getSeries(id)
         viewModel.getComics(id)
-
-
     }
     stateHero?.let {
         stateSeries?.let { it1 ->
-            DetailScreenContent(it1,stateComics, it) {
-            viewModel.updateHero(it)
-
-        }
+            DetailScreenContent(it1, stateComics, it) {
+                viewModel.updateHero(it)
+            }
         }
     }
 }
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun DetailScreenContent(series: List<ResultSeries>,
-                        comics: List<Comics>,
-                        hero: LocalHero,
-                        //viewModel: SuperHeroListViewModel,
-                        onSuperHeroListClicked: (LocalHero) -> Unit) {
+fun DetailScreenContent(
+    series: List<ResultSeries>,
+    comics: List<Comics>,
+    hero: LocalHero,
+    onSuperHeroListClicked: (LocalHero) -> Unit
+) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -101,95 +100,189 @@ fun DetailScreenContent(series: List<ResultSeries>,
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .padding(16.dp)
+                .weight(1f)
         ) {
-
-            Row(horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically) {
-
-                AsyncImage(
-                    model = hero.thumbnail,
-                    //model = "${hero.thumbnail.path}.${hero.thumbnail.thumbnailExtension}",
-                    contentDescription = "${hero.name} photo",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .border(BorderStroke(3.dp, Color.Black), shape = CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                /*val checkedState = remember {
-                    mutableStateOf(hero.favorite)
-                }*/
-                var checkedState = mutableStateOf(hero.favorite)
-                Switch(checked = checkedState.value,
-                    onCheckedChange = {
-                        checkedState.value = it
-                        hero.favorite = checkedState.value
-                        Log.d("Heroe", "Marcado a ${hero.favorite}")
-                        onSuperHeroListClicked(hero)
-                    },
-                colors = SwitchDefaults.colors(Color.Blue))
-            }
+            ImageAndSwitchBlock(hero, onSuperHeroListClicked)
             Text(
                 text = hero.name,
                 style = androidx.compose.material.MaterialTheme.typography.h5,
                 modifier = Modifier.padding(8.dp),
                 textAlign = TextAlign.Center
             )
-            }
-        Column(Modifier.fillMaxSize()) {
-            Text(
-                text = "STARRING in SERIES",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)
-            ) {
-
-                items(series, key = { it.title }) { serie ->
-                    SerieItem(serie = serie)
-                }
-            }
-            Text(
-                text = "ALSO STARRING in COMICS",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.wrapContentHeight(Alignment.CenterVertically)
-            ) {
-
-                items(comics, key = { it.title }) { comic ->
-                    ComicItem(comic = comic)
-                }
-            }
         }
+        Column(
+            Modifier
+                .fillMaxSize()
+                .weight(2f)
+        ) {
+            SeriesBlock(series)
+            ComicsBlock(comics)
         }
-
     }
 
-/*
+}
+
 @Preview(showBackground = true)
 @Composable
-fun DetailScreenScreen_Preview() {
-    DetailScreenContent(listOf(ResultSeries(10,"Captain Carter","",2022,2022,"", Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available","jpg")),
-        ResultSeries(9,"Captain Carter","",2022,2022,"",Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available","jpg")))
-    , listOf(),LocalHero(101,"Hulk","",false), SuperHeroListViewModel(DefaultRepository(LocalDataSource(),RemoteDataSource(),
-            RemoteToLocalMapper()
-        )),{ _->})
-}*/
+fun DetailScreenContent_Preview() {
+    DetailScreenContent(
+        listOf(
+            ResultSeries(
+                9, "Captain Carter", "", 2022, 2022, "",
+                Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available", "jpg")
+            )
+        ),
+        listOf(Comics(1010, "Title of comic")),
+        LocalHero(
+            101,
+            "Hulk",
+            "http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",
+            false
+        )
+    ) {
+    }
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun ImageAndSwitchBlock(hero: LocalHero, onSuperHeroListClicked: (LocalHero) -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        AsyncImage(
+            model = hero.thumbnail,
+            contentDescription = "${hero.name} photo",
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(BorderStroke(3.dp, Color.Black), shape = CircleShape),
+            contentScale = ContentScale.Crop
+        )
+        var checkedState = mutableStateOf(hero.favorite)
+        //Habilitamos o deshabilitamos el estado del switch en función del estado del atributo favorito del héroe
+        Switch(
+            checked = checkedState.value,
+            onCheckedChange = {
+                //Cambiamos el estado del switch según se notifique desde la variable checkedState
+                checkedState.value = it
+                hero.favorite =
+                    checkedState.value//Actualizamos el atributo favorito con el cambio del estado del switch
+                Log.d("Heroe", "Marcado a ${hero.favorite}")
+                onSuperHeroListClicked(hero)//Se envía a la base de datos el cambio de estado para reemplazar el heroe por este con el atributo nuevo
+            },
+            colors = SwitchDefaults.colors(Color.Blue)
+        )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun ImageAndSwitchBlock_Preview() {
+    ImageAndSwitchBlock(LocalHero(101,"Hulk","http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",false)){}
+
+}
+@Composable
+fun ComicsBlock(comics: List<Comics>) {
+    Text(
+        text = "ALSO STARRING in COMICS",
+        style = MaterialTheme.typography.titleLarge,
+        modifier = Modifier
+            .padding(10.dp).testTag("Title comic tag")
+    )
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.height(200.dp)
+    ) {
+
+        items(comics, key = { it.title }) { comic ->
+            ComicItem(comic)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ComicsBlock_Preview() {
+    ComicsBlock(
+        comics = listOf(Comics(1010, "Title of comic"))
+    )
+
+}
+
+@Composable
+fun SeriesBlock(series: List<ResultSeries>) {
+    Text(
+        text = "STARRING in SERIES",
+        style = MaterialTheme.typography.titleLarge,
+        modifier = Modifier
+            .padding(10.dp)
+    )
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.height(200.dp)
+    ) {
+
+        items(series, key = { it.title }) { serie ->
+            SerieItem(serie = serie)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SeriesBlock_Preview() {
+    SeriesBlock(
+        series = listOf(
+            ResultSeries(
+                9, "Captain Carter", "", 2022, 2022, "",
+                Thumbnail(
+                    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+                    "jpg"
+                )
+            )
+        )
+    )
+
+}
+
+
 @Composable
 fun SerieItem(serie: ResultSeries, modifier: Modifier = Modifier) {
-    Text(text = serie.title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(3.dp))
+    Text(
+        text = serie.title,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.padding(3.dp)
+    )
 }
+
+@Preview(showBackground = true)
+@Composable
+fun SerieItem_Preview() {
+    SerieItem(
+        ResultSeries(
+            1010, "Title of serie", "Description", 1, 2, "modified",
+            Thumbnail("http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21", ".jpg")
+        )
+    )
+}
+
+
 @Composable
 fun ComicItem(comic: Comics, modifier: Modifier = Modifier) {
-    Text(text = comic.title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(3.dp))
+    Text(
+        text = comic.title,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.padding(3.dp)
+    )
 }
+
+@Preview(showBackground = true)
+@Composable
+fun ComicItem_Preview() {
+    ComicItem(Comics(1010, "Title of comic"))
+}
+
+
 

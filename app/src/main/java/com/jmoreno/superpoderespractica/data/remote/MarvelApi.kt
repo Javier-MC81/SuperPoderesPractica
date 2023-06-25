@@ -5,12 +5,17 @@ import com.jmoreno.superpoderespractica.model.ResultComics
 import com.jmoreno.superpoderespractica.model.Welcome
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MarvelApi {
 
+
+
     @GET("v1/public/characters?ts=1&apikey=4a0923acfe91399aeb6f46ed9191c341&hash=436e126ec9c88a3886912706aa9e885d&orderBy=-modified")
     suspend fun getWelcome(): Welcome
-
+/*
+    @GET("v1/public/characters?ts=1&apikey=4a0923acfe91399aeb6f46ed9191c341&hash=436e126ec9c88a3886912706aa9e885d&orderBy=-modified")
+    suspend fun getWelcome(@Query("ts") ts:Int,@Query("apikey") apikey:String,@Query("hash") hash:String): Welcome*/
     @GET("v1/public/characters/{heroId}/series?ts=1&apikey=4a0923acfe91399aeb6f46ed9191c341&hash=436e126ec9c88a3886912706aa9e885d&orderBy=-modified")
     suspend fun getSeries(@Path("heroId") heroId: Long): Empty
 

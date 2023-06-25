@@ -31,6 +31,7 @@ class DefaultRepository @Inject constructor
     }
     override suspend fun getSeries(id: Long): Empty {
         return remoteDataSource.getSeries(id)
+
     }
     override suspend fun getComics(id: Long): ResultComics {
         return remoteDataSource.getComics(id)

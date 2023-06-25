@@ -33,20 +33,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jmoreno.superpoderespractica.data.local.model.LocalHero
 import com.jmoreno.superpoderespractica.model.Heroe
+import com.jmoreno.superpoderespractica.model.Thumbnail
 
 
 @Composable
 fun SuperHeroListScreen(viewModel: SuperHeroListViewModel,onSuperHeroListClicked: (Long) -> Unit) {
-
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit){
         //viewModel.getSuperheros()
         viewModel.doLogin()
     }
-
-
-
     SuperHeroListScreenContent(state) { heroId ->
         onSuperHeroListClicked(heroId)
     }
@@ -56,7 +53,6 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel,onSuperHeroListClicked
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuperHeroListScreenContent(heros: List<LocalHero>, onSuperHeroListClicked: (Long) -> Unit) {
-
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -71,7 +67,9 @@ fun SuperHeroListScreenContent(heros: List<LocalHero>, onSuperHeroListClicked: (
 @Preview(showBackground = true)
 @Composable
 fun SuperHeroListScreen_Preview() {
-    SuperHeroListScreenContent(emptyList()) {  }
+    SuperHeroListScreenContent(listOf(LocalHero(101,"Hulk","http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",false),
+        LocalHero(102,"Hulk","http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",false),
+        LocalHero(103,"Hulk","http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",false))) {  }
 }
 @Composable
 fun SuperheroItem(hero: LocalHero, modifier: Modifier = Modifier, onHeroClick: (Long) -> Unit) {
@@ -82,7 +80,6 @@ fun SuperheroItem(hero: LocalHero, modifier: Modifier = Modifier, onHeroClick: (
     ) {
         AsyncImage(
             model = hero.thumbnail,
-            //model = "${hero.thumbnail.path}.${hero.thumbnail.thumbnailExtension}",
             contentDescription = "${hero.name} photo",
             modifier = Modifier
                 .fillMaxWidth()
@@ -96,12 +93,15 @@ fun SuperheroItem(hero: LocalHero, modifier: Modifier = Modifier, onHeroClick: (
             Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp).weight(3f))
             if(hero.favorite){
                 Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite", tint = Color.Red, modifier = Modifier.weight(1f))
-            }else {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = Color.Green,modifier = Modifier.weight(1f))
             }
         }
 
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun SuperheroItem_Preview() {
+    SuperheroItem(LocalHero(101,"Hulk","http://i.annihil.us/u/prod/marvel/i/mg/6/30/4ce69c2246c21.jpg",false)) {  }
 }
 
 
