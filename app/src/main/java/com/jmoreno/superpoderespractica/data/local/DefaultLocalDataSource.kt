@@ -11,10 +11,6 @@ class DefaultLocalDataSource @Inject constructor(private val dao: SuperheroDAO):
     override suspend fun getHerosFlow(): Flow<List<LocalHero>> {
         return dao.getAllFlow()
     }
-    /*override suspend fun insertHero(localSuperhero: LocalSuperhero){
-        dao.insertAllList(listOf(localSuperhero))
-    }
-    */
     override suspend fun insertHeros(localSuperheros: List<LocalHero>){
         dao.insertAllList(localSuperheros)
     }

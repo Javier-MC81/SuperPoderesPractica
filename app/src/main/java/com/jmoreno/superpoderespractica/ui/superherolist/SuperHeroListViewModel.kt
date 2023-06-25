@@ -28,31 +28,25 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
     private val _state = MutableStateFlow<List<LocalHero>>(emptyList())
     val state: StateFlow<List<LocalHero>> get() = _state
 
-    /*private val _series = MutableStateFlow<List<ResultSeries>>(emptyList())
-    val series: StateFlow<List<ResultSeries>> get() = _series*/
     private val _series = MutableLiveData<List<ResultSeries>>()
     val series: LiveData<List<ResultSeries>> get() = _series
 
     private val _comics = MutableStateFlow<List<Comics>>(emptyList())
     val comics: StateFlow<List<Comics>> get() = _comics
 
-    /*private val _hero = MutableStateFlow(LocalHero(1010,"","",false))
-    val hero: StateFlow<LocalHero> get() = _hero*/
     private val _hero = MutableLiveData(LocalHero(1010,"","",false))
     val hero: LiveData<LocalHero> get() = _hero
-
-
 
     fun doLogin(){
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 repository.getWelcome()
             }
-            _state.update { result }
+            _state.update { result } //Recogemos todos los datos del objeto que inicialmente devuelve la API
 
             launch(Dispatchers.IO) {
                 repository.getHeroesFlow().collect{ heros ->
-                    _state.update {  heros }
+                    _state.update {  heros } //Nos quedamos a la escuch con el flow abierto de cualquier cambio en la lista de héroes de la BBDD
                 }
             }
         }
@@ -62,7 +56,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             val result = withContext(Dispatchers.IO){
                 repository.getSeries(id)
             }
-            val series = result.data.results
+            val series = result.data.results// Recogemos el objeto que devuelve de las series, pero nos quedamos con el array de series
             _series.value = series
         }
     }
@@ -71,7 +65,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             val result = withContext(Dispatchers.IO){
                 repository.getComics(id)
             }
-            val comics = result.data.results
+            val comics = result.data.results// Recogemos el objeto que devuelve de las series, pero nos quedamos con el array de series
             _comics.update { comics }
         }
 
@@ -81,12 +75,12 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             val hero = withContext(Dispatchers.IO){
                 repository.getHero(id)
             }
-            _hero.value = hero
+            _hero.value = hero //Buscamos los datos de un heroe en la BBDD a través de su id y los traemos de vuelta para poder pntar sus datos en la pantalla de detalle
         }
     }
     fun updateHero(hero: LocalHero){
         viewModelScope.launch {
-            repository.updateHero(hero)
+            repository.updateHero(hero)//Actualiza el estado de un héroe que haya sido pulsado su switch y haya sido seleccionado/no seleccionado como héroe favorito
 
         }
     }

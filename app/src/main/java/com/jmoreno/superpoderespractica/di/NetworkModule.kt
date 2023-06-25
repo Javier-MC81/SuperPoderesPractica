@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    //private const val BASE_URL = "https://dragonball.keepcoding.education/"
     private const val BASE_URL = "http://gateway.marvel.com/"
     @Provides
     fun provideMoshi(): Moshi {

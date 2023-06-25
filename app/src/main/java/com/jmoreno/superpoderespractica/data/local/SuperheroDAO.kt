@@ -27,10 +27,4 @@ interface SuperheroDAO {
     @Query("SELECT * FROM superheros WHERE id LIKE :id")
     fun getHeroFlow(id:Long): Flow<LocalHero>
 
-
-    /*@Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllVararg(vararg users: LocalSuperhero)
-
-    @Delete
-    suspend fun delete(user: LocalSuperhero)*/
 }

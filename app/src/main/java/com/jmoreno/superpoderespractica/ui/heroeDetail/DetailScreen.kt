@@ -173,7 +173,9 @@ fun ImageAndSwitchBlock(hero: LocalHero, onSuperHeroListClicked: (LocalHero) -> 
                 Log.d("Heroe", "Marcado a ${hero.favorite}")
                 onSuperHeroListClicked(hero)//Se envía a la base de datos el cambio de estado para reemplazar el heroe por este con el atributo nuevo
             },
-            colors = SwitchDefaults.colors(Color.Blue)
+            modifier = Modifier.testTag("Favorite Switch"),
+            colors = SwitchDefaults.colors(Color.Blue),
+
         )
     }
 }

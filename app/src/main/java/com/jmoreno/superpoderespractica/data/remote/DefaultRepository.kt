@@ -15,7 +15,6 @@ import javax.inject.Singleton
 class DefaultRepository @Inject constructor
     (private val localDataSource: LocalDataSource,
      private val remoteDataSource: RemoteDataSource,
-     //private val localToPresentationMapper: LocalToPresentationMapper,
      private val remoteToLocalMapper: RemoteToLocalMapper
 )
     : Repository {
