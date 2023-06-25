@@ -24,9 +24,15 @@ class DetailScreenContentTest{
                 ComicsBlock(emptyList())
             }
             // When
-            Thread.sleep(3000)
+            Thread.sleep(4000)
             // WHEN
             onNodeWithTag("Title comic tag").assertExists().assertIsDisplayed()
         }
     }
 }
+/*
+En este test de UI he probado el componente que me muestra los comics de un héroe.
+Si aparece un elemento bajo el tag "Title comic tag" el test lo reconoce, ve que existe y lanza el aviso de
+que está apareciendo en pantalla, dando el resultado positivo del test. He pausado dos segundos la pantalla
+para que se vea la UI sin problemas.
+*/

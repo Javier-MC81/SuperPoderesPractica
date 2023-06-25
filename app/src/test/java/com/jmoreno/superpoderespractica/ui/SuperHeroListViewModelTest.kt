@@ -61,3 +61,10 @@ class SuperHeroListViewModelTest {
     }
 
 }
+/*
+Se trata de un test real del método findHero del viewModel. Para hacerlo he mockeado el repository y simulado
+su la devolución de el mismo héroe que enviamos a la base de datos. Como este método se establece en el contexto de corrutinas
+he utilizado el coevery. Al comprobar la llegada en el LiveData del héroe en el viewModel, he utilizado la función
+getOrAwaitValue() necesaria para observar el cambio que experimenta esta variable a la vuelta del héroe de la base de datos.
+Una vez actualizado el valor, comprobamos que tiene los mismos datos del héroe que generamos para hacer la búsqueda en BBDD.
+*/

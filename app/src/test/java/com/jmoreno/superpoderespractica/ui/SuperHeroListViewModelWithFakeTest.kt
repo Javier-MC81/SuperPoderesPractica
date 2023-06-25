@@ -52,7 +52,7 @@ class SuperHeroListViewModelWithFakeTest {
         val actualLiveData = viewModel.series.getOrAwaitValue()
 
         // THEN
-        assert(actualLiveData.size == 20)
+        assert(actualLiveData.size == 20 && actualLiveData[0].title == "Name ${actualLiveData.size} series of ${heroCreated.id} superhero")
 
     }
 
@@ -62,3 +62,10 @@ class SuperHeroListViewModelWithFakeTest {
     }
 
 }
+/*
+Test real del viewModel en el que probamos la función getSeries.  Para esto,he hecho un fake del repository
+generando el objeto Empty que recibimos de la API de Marvel.
+Actualizamos el LiveData de las series en el viewModel y por tanto, utilizamos el getOrAwaitValue(). Una vez actualizado, comprobamos que
+las series se han generado a partir del assert. He incluido el nombre del héroe creado en el assert para comprobar que el repository ha enviado
+las series del mismo héroe que he generado.
+ */
